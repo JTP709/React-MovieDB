@@ -12,15 +12,12 @@ class AddMovies extends Component {
   }
 
   getMovies(m){
-    const apikey = 'MIxVEimkSImshXPM4IfT2Qw6mcIgp1gsKyRjsngOF8UPhAhpLA';
+    const apikey = 'fe40a514bfa6aaab071c9c126a0eb70f';
     const query = encodeURI(m);
     $.ajax({
       method: 'GET',
-      url: 'https://api-marcalencc-metacritic-v1.p.mashape.com/search/'+query+'/movie',
+      url: 'https://api.themoviedb.org/3/search/movie?api_key='+apikey+'&language=en-US&query='+query+'&include_adult=false',
       datatype: 'json',
-      beforeSend: function(xhr){
-        xhr.setRequestHeader('X-Mashape-Key',apikey)
-      },
       success: function(data){
         this.setState({results: data}, function(){
           const result = this.state;
@@ -36,7 +33,7 @@ class AddMovies extends Component {
 
   pushMovie(e){
     //console.log('pushMovie executed!')
-    const results = e.results[0].SearchItems;
+    const results = e.results.results;
     console.log('Movie Results:');
     console.log(results);
     let searchList = {newMovie:[]};
@@ -47,12 +44,12 @@ class AddMovies extends Component {
       //console.log(m);
       const movieItem = {
             id: uuid.v4(),
-            title: m.Title,
-            genre: m.Genre,
-            rating: m.Rating.CriticRating
+            title: m.title,
+            overview: m.overview,
+            rating: m.vote_average
           };
-      //console.log('SearchList:');
-      //console.log(searchList.newMovie);
+      console.log('SearchList:');
+      console.log(searchList.newMovie);
       searchList.newMovie.push(movieItem);
     }
     this.setState(

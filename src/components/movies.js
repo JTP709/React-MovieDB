@@ -15,7 +15,7 @@ class Movies extends Component {
                 //console.log('movies.js - movies');
                 //console.log(movies);
                 return (
-                    <MoviesItem onDelete={this.deleteMovie.bind(this)} key={movies.title} movies={movies} />
+                    <MoviesItem onDelete={this.deleteMovie.bind(this)} key={movies.id} movies={movies} />
                 );
             });
         }

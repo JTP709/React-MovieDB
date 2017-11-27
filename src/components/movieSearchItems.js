@@ -8,7 +8,7 @@ class SearchMoviesItem extends Component {
   render() {
     return (
       <li className="MoviesItem">
-        {this.props.search.title} - {this.props.search.rating} <a href="#" onClick={this.selectProject.bind(this, this.props.search)}>Add</a>
+        {this.props.search.title} - <a href="#" onClick={this.selectProject.bind(this, this.props.search)}>Add</a>
       </li>
     );
   }

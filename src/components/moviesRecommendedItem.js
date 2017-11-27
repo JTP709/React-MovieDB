@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class MoviesItem extends Component {
-  deleteMovie(id) {
-    this.props.onDelete(id);
-  }
+class MoviesRecommendedItem extends Component {
   render() {
     return (
       <li className="MoviesItem">
-        {this.props.movies.title} - <a href="#" onClick={this.deleteMovie.bind(this, this.props.movies.id)}>X</a>
+        {this.props.movies.title}
       </li>
     );
   }
 }
 
 // Properties Type validation
-MoviesItem.propTypes = {
+MoviesRecommendedItem.propTypes = {
     movies: PropTypes.object,
     onDelete: PropTypes.func
 }
 
-export default MoviesItem;
+export default MoviesRecommendedItem;
