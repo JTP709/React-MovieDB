@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Movies from './components/movies';
+import FavMovies from './components/favmovies';
 import AddMovies from './components/addmovie';
 import SearchMovies from './components/movieSearch';
-import MovieRecommendations from './components/movieRecomendation.js'
+import SelectedMovie from './components/movieSelected.js'
 import './App.css';
 
 class App extends Component {
@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       movies: [],
       search: [],
-      recomendations:[]
+      select: []
     };
     window.state = this.state;
   }
@@ -25,16 +25,10 @@ class App extends Component {
     const movies = this.state.movies;
     movies.push(movie);
     this.setState({movies:movies});
-
   }
 
-  handleMovieRecomendations(movie){
-    const movies = this.state.recomendations;
-    movies.push(movie);
-    console.log('Movie Recommendation Handler:');
-    console.log(movie);
-    console.log(movies);
-    this.setState({recomendations:movies});
+  handleSelectMovieInfo(movie){
+    this.setState({select:movie});
   }
 
   handleDeleteMovie(id){
@@ -47,10 +41,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <AddMovies addMovie = {this.handleAddMovie.bind(this)} />
+        <AddMovies addMovie={this.handleAddMovie.bind(this)} />
         <SearchMovies search={this.state.search} onSelect={this.handleSelectMovie.bind(this)}/>
-        <Movies movies={this.state.movies} onDelete={this.handleDeleteMovie.bind(this)}/>
-        <MovieRecommendations movies={this.state.movies} recomendations = {this.state.recomendations} onUpdate={this.handleMovieRecomendations.bind(this)}/>
+        <FavMovies movies={this.state.movies} onDelete={this.handleDeleteMovie.bind(this)} onSelect={this.handleSelectMovieInfo.bind(this)}/>
+        <SelectedMovie select={this.state.select}/>
       </div>
     );
   }

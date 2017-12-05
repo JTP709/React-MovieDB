@@ -34,8 +34,6 @@ class AddMovies extends Component {
   pushMovie(e){
     //console.log('pushMovie executed!')
     const results = e.results.results;
-    console.log('Movie Results:');
-    console.log(results);
     let searchList = {newMovie:[]};
     for (let i=0; i<results.length; i++) {
       //console.log('Movie Looped!');
@@ -43,13 +41,14 @@ class AddMovies extends Component {
       //console.log('Looped Results:')
       //console.log(m);
       const movieItem = {
-            id: uuid.v4(),
+            uid: uuid.v4(),
+            mid: m.id,
             title: m.title,
             overview: m.overview,
-            rating: m.vote_average
+            rating: m.vote_average,
+            poster: 'https://image.tmdb.org/t/p/w640'+m.poster_path,
+            date: m.release_date
           };
-      console.log('SearchList:');
-      console.log(searchList.newMovie);
       searchList.newMovie.push(movieItem);
     }
     this.setState(
@@ -73,7 +72,7 @@ class AddMovies extends Component {
   render() {
     return (
       <div>
-        <h3>Add Movie</h3>
+        <h3>Search For Movies</h3>
           <form onSubmit={this.handleSubmit.bind(this)}>
             <div>
               <label>Title</label>

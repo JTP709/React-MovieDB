@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import MoviesItem from './moviesItem';
 import PropTypes from 'prop-types';
 
-class Movies extends Component {
+class FavMovies extends Component {
 
     deleteMovie(id) {
         this.props.onDelete(id);
+    }
+
+    selectMovieInfo(movie) {
+        this.props.onSelect(movie);
     }
 
     render() {
@@ -15,7 +19,7 @@ class Movies extends Component {
                 //console.log('movies.js - movies');
                 //console.log(movies);
                 return (
-                    <MoviesItem onDelete={this.deleteMovie.bind(this)} key={movies.id} movies={movies} />
+                    <MoviesItem onDelete={this.deleteMovie.bind(this)} onSelectInfo={this.selectMovieInfo.bind(this)} key={movies.id} movies={movies} />
                 );
             });
         }
@@ -30,9 +34,9 @@ class Movies extends Component {
 }
 
 // Properties Type validation
-Movies.propTypes = {
+FavMovies.propTypes = {
     movies: PropTypes.array,
     onDelete: PropTypes.func
 }
 
-export default Movies;
+export default FavMovies;
