@@ -19,7 +19,7 @@ class FavMovies extends Component {
                 //console.log('movies.js - movies');
                 //console.log(movies);
                 return (
-                    <MoviesItem onDelete={this.deleteMovie.bind(this)} onSelectInfo={this.selectMovieInfo.bind(this)} key={movies.id} movies={movies} />
+                    <MoviesItem onDelete={this.deleteMovie.bind(this)} onSelectInfo={this.selectMovieInfo.bind(this)} key={movies.mid} movies={movies} />
                 );
             });
         }

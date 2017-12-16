@@ -15,7 +15,7 @@ class SearchMovies extends Component {
                 //console.log('movies.js - movies');
                 //console.log(movies);
                 return (
-                    <SearchMoviesItem onSelect={this.selectMovie.bind(this)} key={search.id} search={search} />
+                    <SearchMoviesItem onSelect={this.selectMovie.bind(this)} key={search.mid} search={search} />
                 );
             });
         }

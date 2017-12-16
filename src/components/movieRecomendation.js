@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
 import MoviesRecommendedItem from './moviesRecommendedItem';
 import PropTypes from 'prop-types';
-import uuid from 'uuid';
-import $ from 'jquery';
 
-class MovieSelected extends Component {
-
+class MovieRecommendations extends Component {
+    
   constructor(){
     super();
     this.state = {
-      recomendations:[]
+      newMovieRecomendations:{}
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps && nextProps.select && nextProps.select.mid) {
-      this.getMovies(nextProps.select.mid);
-    }
+  newRecommendedMovie(movies) {
+
+        console.log('Movie Recommended Function Input:')
+        console.log(movies);
+
+        //this.props.onUpdate(movies);
   }
 
   getMovies(mid){
-    console.log('get recomended movies executed');
     const apikey = 'fe40a514bfa6aaab071c9c126a0eb70f';
     const query = mid;
     $.ajax({
@@ -41,9 +40,10 @@ class MovieSelected extends Component {
   }
 
   pushMovie(e){
-    console.log('movie recomendations pushed');
     //console.log('pushMovie executed!')
     const results = e.results.results;
+    console.log('Movie Recomendation Results:');
+    console.log(results);
     let searchList = {newMovieRecomendations:[]};
     for (let i=0; i<results.length; i++) {
       //console.log('Movie Looped!');
@@ -56,48 +56,48 @@ class MovieSelected extends Component {
             title: m.title,
             overview: m.overview,
             rating: m.vote_average,
-            poster: 'https://image.tmdb.org/t/p/w640'+m.poster_path,
+            poster: 'https://image.tmdb.org/t/p'+m.poster_path,
             date: m.release_date
           };
+      console.log('SearchList:');
+      console.log(searchList.newMovieRecomendations);
       searchList.newMovieRecomendations.push(movieItem);
     }
     this.setState(
-      {recomendations:searchList.newMovieRecomendations}
+      searchList, function(){
+        this.props.addMovie(this.state.newMovieRecomendations);
+        //console.log('Movie Added');
+      }
     );
   }
 
-  render() {
-    console.log('movie info rendered');
-    let moviesItems;
-    if(this.state.recomendations) {
-        moviesItems = this.state.recomendations.map(recomendations => {
-            //console.log('movies.js - movies');
-            //console.log(movies);
-            return (
-                <MoviesRecommendedItem key={recomendations.uuid} movies={recomendations} />
-            );
-        });
+    render() {
+        let moviesList = this.props.movies;
+        const movieUpdate = this.newRecommendedMovie(moviesList);
+        let moviesItems;
+        if(this.props.recomendations) {
+            moviesItems = this.props.recomendations.map(recomendations => {
+                //console.log('movies.js - movies');
+                //console.log(movies);
+                return (
+                    <MoviesRecommendedItem key={recomendations.mid} movies={recomendations} />
+                );
+            });
+        }
+
+        return (
+            <div className="Movies">
+                <h3>Recommended Movies</h3>
+                {moviesItems}
+            </div>
+        );
     }
-
-    return (
-        <div className="Movies">
-            <h3>Movie Info</h3>
-            <img src={this.props.select.poster}/>
-            <p><b>{this.props.select.title}</b></p>
-            <p>{this.props.select.overview}</p>
-            <p>{this.props.select.rating}</p>
-            <p>{this.props.select.date}</p>
-            <h4>Recomended Movies</h4>
-            {moviesItems}
-        </div>
-    );
-  }
 }
 
 // Properties Type validation
-MovieSelected.propTypes = {
+MovieRecommendations.propTypes = {
     movies: PropTypes.array,
     onDelete: PropTypes.func
 }
 
-export default MovieSelected;
+export default MovieRecommendations;
